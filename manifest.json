@@ -1,27 +1,40 @@
 {
-    "name": "ArchInspire - 室内美学",
-    "short_name": "ArchInspire",
-    "description": "Architecture & Interior Design Inspiration App",
-    "start_url": "/",
-    "display": "standalone",
-    "orientation": "portrait-primary",
-    "background_color": "#191B1F",
-    "theme_color": "#21ce8a",
-    "lang": "zh-CN",
-    "icons": [
-      {
-        "src": "icon-192.png",
-        "sizes": "192x192",
-        "type": "image/png",
-        "purpose": "any maskable"
-      },
-      {
-        "src": "icon-512.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "any maskable"
-      }
-    ],
-    "categories": ["lifestyle", "design"],
-    "screenshots": []
-  }
+  "name": "ArchInspire - 室内美学",
+  "short_name": "ArchInspire",
+  "description": "Architecture & Interior Design Inspiration App",
+  "id": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#191B1F",
+  "theme_color": "#21ce8a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["lifestyle", "design"],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png"
+    }
+  ]
+}
