@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArchInspire - Architecture & Interior Design</title>
+
+  <!-- PWA 图标与 manifest -->
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- 主题色 -->
+  <meta name="theme-color" content="#21ce8a">
+
+  <!-- iOS PWA 全屏支持 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ArchInspire">
+
+  <!-- Android Chrome PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500&display=swap">
+
+  <style>
+    :root {
+      --primary-bg: #191B1F;
+      --secondary-bg: #23252b;
+      --accent: #61e8d7;
+      --soft-white: #fafbfc;
+      --font-primary: 'Inter', 'Segoe UI', Arial, sans-serif;
+      --font-brand: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      --radius: 18px;
+      --shadow: 0 4px 32px 0 rgba(32,40,56,0.25);
+      --transition: 0.18s cubic-bezier(.83,.17,0,1.01);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--primary-bg);
+      color: var(--soft-white);
+      font-family: var(--font-primary);
+      min-height: 100vh;
+    }
+
+    main { padding-bottom: 76px; min-height: 100vh; }
+
+    .page { display: none; }
+    .page.active {
+      display: block;
+      animation: fade-in 0.38s ease;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 36px 0 18px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-family: var(--font-brand);
+      user-select: none;
+    }
+
+    /* ── HOME: Banner list ── */
+    .banner-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0 6vw;
+      max-width: 900px;
+      margin: 0 auto 36px;
+    }
+    .banner {
+      position: relative;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: var(--secondary-bg);
+      cursor: pointer;
+      padding: 28px 56px 24px 28px;
+      border: 1.5px solid #2a3040;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .banner:hover {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 8px 32px rgba(97,232,215,0.12), var(--shadow);
+      border-color: var(--accent);
+    }
+    .banner-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-family: var(--font-brand);
+      opacity: 0.75;
+    }
+    .banner-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--soft-white);
+      font-family: var(--font-brand);
+      margin-bottom: 8px;
+    }
+    .banner-desc {
+      font-size: .95rem;
+      color: #8aa8b0;
+      line-height: 1.6;
+    }
+    .banner-arrow {
+      position: absolute;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: var(--accent);
+      opacity: 0.4;
+      transition: opacity var(--transition), right var(--transition);
+    }
+    .banner:hover .banner-arrow { opacity: 1; right: 16px; }
+
+    /* ── HOME: Inspiration detail ── */
+    .inspiration-content {
+      display: flex;
+      flex-direction: column;
+      padding: 24px 6vw;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .inspiration-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-family: var(--font-brand);
+      padding-top: 16px;
+    }
+    .inspiration-notes {
+      background: rgba(33,48,56,0.65);
+      border-radius: var(--radius);
+      padding: 8px 24px 8px;
+      width: 100%;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #eaf3f2;
+      list-style: none;
+      margin: 0 0 24px;
+    }
+    .inspiration-notes li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(97,232,215,0.1);
+    }
+    .inspiration-notes li:last-child { border-bottom: none; }
+    .inspiration-notes li::before {
+      content: '✦ ';
+      color: var(--accent);
+      font-size: .8rem;
+    }
+    .back-link {
+      display: inline-block;
+      padding: 9px 22px;
+      border-radius: 10px;
+      background: #1b2230;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: background .15s;
+      align-self: flex-start;
+    }
+    .back-link:hover { background: #253055; }
+
+    /* ── KNOWLEDGE ── */
+    .knowledge-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 5vw 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .knowledge-item {
+      background: rgba(33,48,56,0.6);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 26px;
+      border: 1.5px solid #2a3040;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .knowledge-item:hover {
+      box-shadow: 0 8px 36px rgba(97,232,215,0.1), var(--shadow);
+      border-color: rgba(97,232,215,0.25);
+    }
+    .knowledge-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-family: var(--font-brand);
+    }
+    .knowledge-tip {
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #eaf3f2;
+    }
+    .knowledge-tip:last-child { margin-bottom: 0; }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      height: 66px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1d28 70%, #1e3030 100%);
+      box-shadow: 0 -2px 28px rgba(20,28,40,0.5);
+      border-top: 1.5px solid #263040;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      z-index: 999;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      outline: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: #9ab8c0;
+      cursor: pointer;
+      font-size: .88rem;
+      font-family: var(--font-primary);
+      padding: 6px 32px;
+      border-radius: 12px;
+      transition: color .14s;
+    }
+    .nav-btn.active, .nav-btn:hover { color: var(--accent); }
+    .nav-btn svg { display: block; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <main id="main">
+
+    <!-- ════ HOME PAGE ════ -->
+    <section id="page-home" class="page active">
+      <div class="header">ArchInspire · 室内美学</div>
+      <div class="banner-list" id="banner-list"></div>
+    </section>
+
+    <!-- ════ KNOWLEDGE PAGE ════ -->
+    <section id="page-knowledge" class="page">
+      <div class="header">空间知识 · 实用指南</div>
+      <div class="knowledge-wrap" id="knowledge-wrap"></div>
+    </section>
+
+  </main>
+
+  <!-- ── BOTTOM NAV ── -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="home">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+        <path d="M7 16L16 7L25 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="10" y="17" width="12" height="8" rx="2.5" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      首页
+    </button>
+    <button class="nav-btn" data-page="knowledge">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+        <rect x="7" y="6" width="18" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
+        <line x1="11" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="11" y1="17" x2="21" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="11" y1="22" x2="17" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      知识
+    </button>
+  </nav>
+
+  <script>
+    // ── Service Worker 注册 ──
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('SW registered'))
+        .catch(err => console.warn('SW failed:', err));
+    }
+
+    // ── 数据 ──
+    const banners = [
+      {
+        label: "风格灵感",
+        title: "极简主义 · 静谧居家",
+        desc: "以留白与线条为核心，打造通透宁静的生活空间。",
+        inspiration: {
+          title: "极简风 · 灵感空间",
+          notes: [
+            "空间布局强调线条纯粹与留白，营造通透与宁静。",
+            "配色以莫兰迪灰、象牙白为主，辅以细腻的木色点缀。",
+            "全屋采用隐形储物设计，所有物件收纳于墙面柜体之中。",
+            "坚持极简少物，每一物件皆为生活核心必需品。"
+          ]
+        }
+      },
+      {
+        label: "风格灵感",
+        title: "高级现代风 · 雅致客厅",
+        desc: "深灰与金属质感交织，彰显都市精英的生活品味。",
+        inspiration: {
+          title: "现代都会 · 卓越格调",
+          notes: [
+            "选用高质感深灰与蓝宝石低饱和色调，突出都市高级感。",
+            "家具多采用金属边框和皮质饰面，为空间增添层次感。",
+            "由线性灯带定义空间边界，带来未来感氛围灯效。",
+            "软装选用几何抱枕与抽象挂画，强化视觉焦点。"
+          ]
+        }
+      },
+      {
+        label: "风格灵感",
+        title: "自然融合 · 温润木屋",
+        desc: "原木与绿植相伴，让家成为最温柔的自然庇护所。",
+        inspiration: {
+          title: "木质温馨 · 活力生机",
+          notes: [
+            "采用原木色饰面，亲近自然，氛围温馨。",
+            "大面积落地窗，使户外自然光充分渗透。",
+            "多层植被点缀，提升空间活跃度与层次。",
+            "家具均选弧形流线设计，避免棱角，营造柔和细腻体验。"
+          ]
+        }
+      }
+    ];
+
+    const knowledgeItems = [
+      {
+        title: "卧室床型与尺寸",
+        tips: [
+          "常见床型有单人床(1.0~1.2m)、双人床(1.5~1.8m)、加大床(2.0m)。",
+          "床头与墙体最佳间距40cm以上，床侧面距离避免小于70cm。",
+          "圆角床架更适合现代风，防碰撞且视觉轻盈。",
+          "床下推荐带抽屉设计，提升收纳空间。"
+        ]
+      },
+      {
+        title: "家具尺寸黄金比例",
+        tips: [
+          "沙发座高一般以40-45cm为宜，茶几高度35~45cm。",
+          "餐桌椅之间预留最少80cm，方便出入与活动。",
+          "书桌深度大于65cm，方便分区收纳与多屏协作。",
+          "壁柜下沿距地建议125-155cm，便于取物。"
+        ]
+      },
+      {
+        title: "照明与氛围塑造",
+        tips: [
+          "主灯采用暖白光(3500K)提升舒适感，辅助灯带营造空间层次。",
+          "采用隐形嵌入灯带，减少多余灯饰与视觉杂乱。",
+          "局部射灯突出艺术挂画或装饰节点，增强空间焦点。",
+          "智能感应夜灯，提升起夜便利性与科技感。"
+        ]
+      }
+    ];
+
+    // ── 页面路由 ──
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`[data-page="${pageId}"]`)?.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => showPage(btn.dataset.page));
+    });
+
+    // ── 首页 Banner ──
+    function renderBanners() {
+      const list = document.getElementById('banner-list');
+      list.innerHTML = banners.map((b, i) => `
+        <div class="banner" data-idx="${i}" tabindex="0" role="button" aria-label="${b.title}">
+          <div class="banner-label">${b.label}</div>
+          <div class="banner-title">${b.title}</div>
+          <div class="banner-desc">${b.desc}</div>
+          <span class="banner-arrow">→</span>
+        </div>
+      `).join('');
+      list.querySelectorAll('.banner').forEach(el => {
+        el.addEventListener('click', () => showInspiration(+el.dataset.idx));
+        el.addEventListener('keypress', e => { if (e.key === 'Enter') showInspiration(+el.dataset.idx); });
+      });
+    }
+
+    function showInspiration(idx) {
+      const { title, notes } = banners[idx].inspiration;
+      const homeSection = document.getElementById('page-home');
+      homeSection.innerHTML = `
+        <div class="inspiration-content">
+          <div class="inspiration-title">${title}</div>
+          <ul class="inspiration-notes">
+            ${notes.map(n => `<li>${n}</li>`).join('')}
+          </ul>
+          <button class="back-link" id="back-btn">← 返回首页</button>
+        </div>
+      `;
+      document.getElementById('back-btn').addEventListener('click', () => {
+        homeSection.innerHTML = '<div class="header">ArchInspire · 室内美学</div><div class="banner-list" id="banner-list"></div>';
+        renderBanners();
+      });
+    }
+
+    // ── 知识页 ──
+    function renderKnowledge() {
+      const wrap = document.getElementById('knowledge-wrap');
+      wrap.innerHTML = knowledgeItems.map(k => `
+        <div class="knowledge-item">
+          <div class="knowledge-title">${k.title}</div>
+          ${k.tips.map(t => `<div class="knowledge-tip">${t}</div>`).join('')}
+        </div>
+      `).join('');
+    }
+
+    // ── 初始化 ──
+    renderBanners();
+    renderKnowledge();
+  </script>
+</body>
+</html>
