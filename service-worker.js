@@ -4,8 +4,7 @@ const CACHE_NAME = 'archinspire-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
-  '/manifest.json',
-  '/a.png'
+  '/manifest.json'
 ];
 
 // 安装阶段：缓存核心资源
@@ -74,3 +73,4 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
